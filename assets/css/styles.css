@@ -53,3 +53,12 @@ img{
     border-radius: 10px;
     margin-bottom: 5px;
 }
+
+#rightImage, #leftImage, span{
+    display: inline-block;
+    padding: 0;
+}
+
+#questionBlock{
+    display: none;
+}

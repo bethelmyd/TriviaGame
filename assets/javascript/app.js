@@ -37,11 +37,6 @@ $().ready(function(){
     if(count == images.length)
     	count = 0;
 
-     //Use a setTimeout to run displayImage after 1 second
-    // setTimeout(function(){
-    // 	displayImage();
-    // }, 3000);
-
     displayImage();
 
 }
@@ -81,6 +76,10 @@ function displayQuestion()
 	$("div#choiceBlock ul#choices li#D").html(question.D);
 	$("div#answerBlock ul#answers li#A").html(question.A);
 	$("span#answer").html(question[question.answer]);
+}
+
+function setUpHandlers(){
+	
 }
 
 displayImage();

@@ -25,41 +25,43 @@
 	<main class="container">
 		<section class="row">
 			
-			<div class="col-md-2"><div id= "leftImage"></div></div>
+			<div class="col-md-2 text-center"><span id= "leftImage"></span></div>
 			<div class = "col-md-8">
 				<div id= "main" >
 					<h4 class="text-center">See whether you are a dog's best friend or not.</h4>
 					<div class = "text-center"><button id = "startBtn" class="btn btn-success">Start Quiz</button></div>
 				</div>
 			</div>
-			<div class="col-md-2"><div id= "rightImage"></div></div>	
-		</div>		
-	</section>
-	<section class="row">
-		<div id= "main" class = "col-md-12">
-			<p id="question">What is?</p>
-			<div id="choiceBlock">
-				<ul id = "choices" class="list-group">
-					<li id = "A" class="list-group-item">First item</li>
-					<li id = "B" class="list-group-item">Second item</li>
-					<li id = "C" class="list-group-item">Third item</li>
-					<li id = "D" class="list-group-item">Fourth item</li>
-				</ul>
+			<div class="col-md-2 text-center"><span id= "rightImage"></span></div>			
+		</section>
+		<section class="row">
+			<div id= "main" class = "col-md-12">
+			<div id="splashScreen text-center"><img src="assets/images/schnauzers1.jpg" alt="Picture of My Schnauzers"></div>
+				<div id="questionBlock">
+					<p id="question">What is?</p>
+					<div id="choiceBlock">
+						<ul id = "choices" class="list-group">
+							<li id = "A" class="list-group-item">First item</li>
+							<li id = "B" class="list-group-item">Second item</li>
+							<li id = "C" class="list-group-item">Third item</li>
+							<li id = "D" class="list-group-item">Fourth item</li>
+						</ul>
+					</div>
+					<p id = "answerArea">Answer: <span id="answer"></span></p>
+					<div class = "text-center"><button id = "nextBtn" class="btn btn-success">Next</button></div>
+				</div>
 			</div>
-			<p id = "answerArea">Answer: <span id="answer"></span></p>
-			<div class = "text-center"><button id = "nextBtn" class="btn btn-success">Next</button></div>
-		</div>
-	</section>
+		</section>
 
-</main>
+	</main>
 
-<footer class = "container-fluid">
-	<div class="row">
-		<div class="col-md-12 text-center">
-			<h6>&copy;Copyright 2016 David Bethelmy</h6>
+	<footer class = "container-fluid">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<h6>&copy;Copyright 2016 David Bethelmy</h6>
+			</div>
 		</div>
-	</div>
-</footer>
-<script src='assets/javascript/app.js'></script>
+	</footer>
+	<script src='assets/javascript/app.js'></script>
 </body>
 </html>
