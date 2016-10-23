@@ -21,21 +21,27 @@ $().ready(function(){
 	var questionsSelected = [];
 
 	var secondsToWait = 5;
-	var count = 0;
+	var imageCount = 0;
 
-	var intervalTimer = null;
+	var slideShowTimer = null;
+	var quizTimer = null;
+	var questionNumber = 0;
+	var correct = false;
+	var correctCount = 0;
+	var $choice = null;
+	var currentQuestionNum = null;
 
 	function displayImage (){
-		$('#leftImage').html('<img src="assets/images/'+images[count]+ '" width="132px" height="132px">');
-		$('#rightImage').html('<img src="assets/images/'+images[count]+ '" width="132px" height="132px">');
+		$('#leftImage').html('<img src="assets/images/'+images[imageCount]+ '" width="132px" height="132px">');
+		$('#rightImage').html('<img src="assets/images/'+images[imageCount]+ '" width="132px" height="132px">');
 	}
 
 	function nextImage (){
     //increment the count by 1
-    count++;
+    imageCount++;
     //if the count is the same as the length of the image array, reset the count to 0
-    if(count == images.length)
-    	count = 0;
+    if(imageCount == images.length)
+    	imageCount = 0;
 
     displayImage();
 
@@ -43,7 +49,7 @@ $().ready(function(){
 
 function startSlideshow (){
     //use a setInterval to run nextImage
-    intervalTimer = setInterval(function(){
+    slideShowTimer = setInterval(function(){
     	nextImage();
     }, 4000);
 }
@@ -63,28 +69,98 @@ function prepareQuestions()  //sets up a random selection of question numbers
 }
 
 function displayQuestion()
-{
+{	
+	$("#answerArea").css("display", "none");
+	$("#questionBlock").css("display", "block");
 	//get question number
-	var questionNum = questionsSelected.shift();
+	currentQuestionNum = questionsSelected.shift();
 	//get question
-	var question = questions[questionNum];  
+	var question = questions[currentQuestionNum];
 	//put question into position on page
 	$("p#question").html(question.question);
 	$("div#choiceBlock ul#choices li#A").html(question.A);
 	$("div#choiceBlock ul#choices li#B").html(question.B);
 	$("div#choiceBlock ul#choices li#C").html(question.C);
 	$("div#choiceBlock ul#choices li#D").html(question.D);
-	$("div#answerBlock ul#answers li#A").html(question.A);
-	$("span#answer").html(question[question.answer]);
+}
+
+function displayAnswer(msg){
+	$("#answerArea").css("display", "block");
+	$("#answerArea span#answer").html(msg);
+	var timer = setTimeout(function(){
+		if(questionsSelected.length != 0)
+		{
+			displayQuestion();
+		}
+		else
+		{
+
+		}
+	}, 3000);
+}
+
+function gradeQuestion()
+{
+	if($choice == null)
+	{
+		displayAnswer(false, "Please make a choice before submitting.");		
+	}
+	else
+	{
+		var answer = $choice.attr("id");
+		var correctAnswer = questions[currentQuestionNum].answer;
+		if(answer == correctAnswer)
+		{
+			correctCount++;
+			displayAnswer("Great Job!");
+		}
+		else 
+		{
+			displayAnswer(questions[currentQuestionNum][correctAnswer]);
+		}
+	}
+}
+
+function startQuiz()
+{
+	$("#startBtn").css("display", "none");
+	$("#splashScreen").css("display", "none");
+	prepareQuestions();
+	displayQuestion();
+}
+
+function getChoice()
+{
+	$("#choices li").each(function(){
+		$(this).css("background-color", "white");
+	});
+	$(this).css("background-color", "yellow");
+	$choice = $(this);
+	console.log($choice);
 }
 
 function setUpHandlers(){
-	
+	$("#startBtn").on("click", startQuiz);
+	$("#submitBtn").on("click", gradeQuestion);
+	$("#choices li").on("click", getChoice);
 }
 
+function reset(){
+	$("#answerArea").css("display", "none");
+	$("#questionBlock").css("display", "none");
+	$("#startBtn").css("display", "block");
+	questionNumber = 0;
+	correct = false;
+	$choice = null;
+	currentQuestionNum = null;
+	correctCount = 0;
+}
+
+
+/*Where everything starts*/
 displayImage();
 startSlideshow();
-prepareQuestions();
-displayQuestion();
+setUpHandlers();
+
 
 }); //end ready
