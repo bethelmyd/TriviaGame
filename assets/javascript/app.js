@@ -24,7 +24,7 @@ $().ready(function(){
 	var imageCount = 0;
 
 	var slideShowTimer = null;
-	var quizTimer = null;
+	var questionTimer = null;
 	var questionNumber = 0;
 	var correct = false;
 	var correctCount = 0;
@@ -73,8 +73,17 @@ function displayQuestion()
 	$("#choices li").each(function(){
 		$(this).css("background-color", "white");
 	});
+	// $("#choices li").hover(function(){
+	// 	$(this).css("background-color", "yellow");
+	// }, function(){
+	// 	$(this).css("background-color", "white");		
+	// });
+
 	$("#answerArea").css("display", "none");
 	$("#questionBlock").css("display", "block");
+	$("#submitBtn").css("display", "block");
+	$("#submitBtn").on("click", gradeQuestion);
+	$("#choices li").on("click", getChoice);
 	//get question number
 	currentQuestionNum = questionsSelected.shift();
 	//get question
@@ -85,40 +94,61 @@ function displayQuestion()
 	$("div#choiceBlock ul#choices li#B").html(question.B);
 	$("div#choiceBlock ul#choices li#C").html(question.C);
 	$("div#choiceBlock ul#choices li#D").html(question.D);
+
+	$("#clock").css("display", "block");
+	secondsToWait = 5;
+	$("#timeLeft").html(secondsToWait);
+	questionTimer = setInterval(function(){
+		secondsToWait--;
+		if(secondsToWait == 0)
+		{
+			clearInterval(questionTimer);
+			$("#submitBtn").off("click");
+			$("#submitBtn").css("display", "none");
+			var correctAnswer = questions[currentQuestionNum].answer;
+			displayAnswer("The correct answer is: " + questions[currentQuestionNum][correctAnswer]);
+			var timer = setTimeout(function(){
+				clearTimeout(timer);
+				$("#answerArea").css("display", "none");
+				$("#answerArea span#answer").html("");					
+				if(questionsSelected.length != 0)
+				{
+					displayQuestion();
+				}
+				else
+				{
+					summarize();
+				}
+			}, 2000);
+		}
+		$("#timeLeft").html(secondsToWait);
+	}, 1000);
+
+
 }
 
 function displayAnswer(msg){
+				//clearInterval(questionTimer);
 	$("#answerArea").css("display", "block");
 	$("#answerArea span#answer").html(msg);
-	var timer = setTimeout(function(){
-		if(questionsSelected.length != 0)
-		{
-			if($choice != null)
-				displayQuestion();
-			else
-			{
-				$("#answerArea").css("display", "none");
-				$("#answerArea span#answer").html("");	
-			}
-
-		}
-		else
-		{
-			summarize();
-		}
-	}, 3000);
 }
 
 function gradeQuestion()
 {
+		//clearInterval(questionTimer);
 	if($choice == null)
 	{
 		displayAnswer("Please make a choice before submitting.");		
+		// var timer = setTimeout(function(){
+		// 	$("#answerArea").css("display", "none");
+		// 	$("#answerArea span#answer").html("");	
+		// }, 2000);
 	}
 	else
 	{
-		var answer = $choice.attr("id");
-		var correctAnswer = questions[currentQuestionNum].answer;
+		clearInterval(questionTimer);
+		$("#choices li").off("click");
+		$("#submitBtn").css("display", "none");
 		if(answer == correctAnswer)
 		{
 			correctCount++;
@@ -126,8 +156,24 @@ function gradeQuestion()
 		}
 		else 
 		{
+			var answer = $choice.attr("id");
+			var correctAnswer = questions[currentQuestionNum].answer;
 			displayAnswer("The correct answer is: " + questions[currentQuestionNum][correctAnswer]);
 		}
+		var timer = setTimeout(function(){
+			clearTimeout(timer);
+			$("#answerArea").css("display", "none");
+			$("#answerArea span#answer").html("");	
+			$choice = null;				
+			if(questionsSelected.length != 0)
+			{
+				displayQuestion();
+			}
+			else
+			{
+				summarize();
+			}
+		}, 2000);
 	}
 }
 
@@ -151,6 +197,8 @@ function startQuiz()
 
 function getChoice()
 {
+	$("#answerArea").css("display", "none");
+	$("#answerArea span#answer").html("");	
 	$("#choices li").each(function(){
 		$(this).css("background-color", "white");
 	});
@@ -184,6 +232,7 @@ function reset(){
 	$choice = null;
 	currentQuestionNum = null;
 	correctCount = 0;
+	$("#choices li").on("click", getChoice);
 }
 
 

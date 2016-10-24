@@ -45,7 +45,7 @@ footer{
     padding: 10px 0;
     position: absolute;
     bottom: 0;
-    left: 0;
+    /*left: 0;*/
     width: 100%;
 }
 
@@ -59,6 +59,10 @@ img{
     padding: 0;
 }
 
-#questionBlock{
+#choices li{
+    cursor: pointer;
+}
+
+#clock{
     display: none;
 }
