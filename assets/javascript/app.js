@@ -70,6 +70,9 @@ function prepareQuestions()  //sets up a random selection of question numbers
 
 function displayQuestion()
 {	
+	$("#choices li").each(function(){
+		$(this).css("background-color", "white");
+	});
 	$("#answerArea").css("display", "none");
 	$("#questionBlock").css("display", "block");
 	//get question number
@@ -90,11 +93,18 @@ function displayAnswer(msg){
 	var timer = setTimeout(function(){
 		if(questionsSelected.length != 0)
 		{
-			displayQuestion();
+			if($choice != null)
+				displayQuestion();
+			else
+			{
+				$("#answerArea").css("display", "none");
+				$("#answerArea span#answer").html("");	
+			}
+
 		}
 		else
 		{
-
+			summarize();
 		}
 	}, 3000);
 }
@@ -103,7 +113,7 @@ function gradeQuestion()
 {
 	if($choice == null)
 	{
-		displayAnswer(false, "Please make a choice before submitting.");		
+		displayAnswer("Please make a choice before submitting.");		
 	}
 	else
 	{
@@ -116,9 +126,19 @@ function gradeQuestion()
 		}
 		else 
 		{
-			displayAnswer(questions[currentQuestionNum][correctAnswer]);
+			displayAnswer("The correct answer is: " + questions[currentQuestionNum][correctAnswer]);
 		}
 	}
+}
+
+function summarize()
+{
+	$("#answerArea").css("display", "none");
+	$("#questionBlock").css("display", "none");
+	$("#summaryArea").css("display", "block");
+	$("#numQuestions").html("Number of questions: " + questions.length);
+	$("#numCorrect").html("Number of correct answers: " + correctCount);
+	$("#numWrong").html("Number of incorrect answers: " + (questions.length - correctCount));
 }
 
 function startQuiz()
@@ -143,12 +163,22 @@ function setUpHandlers(){
 	$("#startBtn").on("click", startQuiz);
 	$("#submitBtn").on("click", gradeQuestion);
 	$("#choices li").on("click", getChoice);
+	$("#restartBtn").on("click", restart);
+
+}
+
+function restart()
+{
+	reset();
+	prepareQuestions();
+	displayQuestion();
 }
 
 function reset(){
 	$("#answerArea").css("display", "none");
+	$("#answerArea span#answer").html("");	
 	$("#questionBlock").css("display", "none");
-	$("#startBtn").css("display", "block");
+	$("#summaryArea").css("display", "none");
 	questionNumber = 0;
 	correct = false;
 	$choice = null;
@@ -158,6 +188,7 @@ function reset(){
 
 
 /*Where everything starts*/
+reset();
 displayImage();
 startSlideshow();
 setUpHandlers();
