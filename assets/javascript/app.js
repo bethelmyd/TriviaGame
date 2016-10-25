@@ -63,7 +63,7 @@ $().ready(function(){
 
 	var questionsSelected = [];
 
-	var secondsToWait = 5;
+	var maxSecondsToWait = 8;
 	var imageCount = 0;
 
 	var slideShowTimer = null;
@@ -133,7 +133,7 @@ function displayQuestion()
 	$("div#choiceBlock ul#choices li#D").html(question.D);
 
 	$("#clock").css("display", "block");
-	secondsToWait = 5;
+	var secondsToWait = maxSecondsToWait;
 	$("#timeLeft").html(secondsToWait);
 	questionTimer = setInterval(function(){
 		secondsToWait--;
@@ -141,7 +141,7 @@ function displayQuestion()
 		{
 			clearInterval(questionTimer);
 			var correctAnswer = questions[currentQuestionNum].answer;
-			displayAnswer("Times Up!<br>The correct answer is: " + questions[currentQuestionNum][correctAnswer], false);
+			displayAnswer("Time's Up!<br>The correct answer is: " + questions[currentQuestionNum][correctAnswer], false);
 			var timer = setTimeout(function(){
 				$("#answerArea").css("display", "none");
 				$("#answerArea #answer").html("");					
