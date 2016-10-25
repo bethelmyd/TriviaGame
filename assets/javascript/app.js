@@ -135,6 +135,30 @@ function displayAnswer(msg, isCorrect){
 		img = imagesForIncorrectAnswer[random];		
 	}
 	$("#answerImage").html("<img src = 'assets/images/" + img + "'>");
+	drawStars();
+}
+
+function drawStars()
+{
+	var average = Math.round(correctCount/questions.length*100, 2);
+	var numStars = 0;
+	if (average >= 90)
+		numStars = 4;
+	else if(average >= 70)
+		numStars = 3;
+	else if(average >= 50)
+		numStars = 2;
+	else if(average >= 10)
+		numStars = 1;
+
+	var stars = "";
+	for(var i = 0; i < numStars; i++)
+		stars += '<i class="fa fa-heart"></i>';
+	if (numStars == 0)
+		stars = "Friendless";
+		
+	$("#bff").html(stars);
+
 }
 
 function gradeQuestion()
@@ -172,9 +196,9 @@ function summarize()
 	$("#answerArea").css("display", "none");
 	$("#questionBlock").css("display", "none");
 	$("#summaryArea").css("display", "block");
-	$("#numQuestions").html("Number of questions: " + questions.length);
-	$("#numCorrect").html("Number of correct answers: " + correctCount);
-	$("#numWrong").html("Number of incorrect answers: " + (questions.length - correctCount));
+	$("#numQuestions").html(questions.length);
+	$("#numCorrect").html(correctCount);
+	$("#numWrong").html(questions.length - correctCount);
 }
 
 function startQuiz()

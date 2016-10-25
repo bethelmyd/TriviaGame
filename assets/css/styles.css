@@ -11,11 +11,15 @@ h1, h2, h3, h4, h5, h6{
     font-weight: bold;
 }
 
-#main{
-    padding: 10px;
+#main, #header{
+    padding: 0px;
     background-color: white;
     border-radius: 5px;
     /*position: relative;*/
+}
+
+#header{
+    padding: 10px;
 }
 
 #main  p, #main h3{
@@ -69,4 +73,9 @@ img{
 
 #answerArea{
     height: 300px;
+}
+
+#splashScreen{
+    background-image: url("../images/concrete_seamless.png");
+    padding: 0;
 }
