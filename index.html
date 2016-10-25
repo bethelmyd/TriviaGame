@@ -30,7 +30,7 @@
 			<div class = "col-md-8">
 				<div id= "header" >
 					<h4 class="text-center">Are you are a dog's best friend?</h4>
-					<h5 class="text-center">Take this quiz and find out.</h5>
+					<h5 class="text-center">Take this <span id = "numQuestions"></span>-question quiz and find out.</h5>
 					<div class = "text-center"><button id = "startBtn" class="btn btn-success">Start Quiz</button></div>
 				</div>
 			</div>
@@ -40,7 +40,8 @@
 			<div id= "main" class = "col-md-12">
 				<div id="splashScreen" class="text-center"><img src="assets/images/schnauzers1.jpg" alt="Picture of My Schnauzers"></div>
 				<div id="questionBlock">
-					<h3 id="clock">Time left: <span id="timeLeft"></span> seconds</h3>
+					<h4 id="clock">Question number: <span id="questionNumber"></span></h4>
+					<h5>Time left: <span id="timeLeft"></span> seconds</h5>
 					<p id="question">What is?</p>
 					<div id="choiceBlock">
 						<ul id = "choices" class="list-group">

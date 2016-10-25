@@ -18,7 +18,47 @@ $().ready(function(){
 		question: "Through what part of the body do dogs sweat?",
 		"A": "Mouth", "B": "Ears", "C": "Nose" , "D": "Paws",
 		answer: "D"
-	}
+	},
+	{
+		question: "What is the most common training command taught to dogs?",
+		"A": "Stay", "B": "Beg", "C": "Sit" , "D": "Dance",
+		answer: "C"
+	},
+	{
+		question: "What is a dog’s most highly developed sense?",
+		"A": "Taste", "B": "Smell", "C": "Sight" , "D": "Touch",
+		answer: "B"
+	},
+	{
+		question: "How many weeks after conception are puppies delivered?",
+		"A": 36, "B": 22, "C": 9 , "D": 16,
+		answer: "C"
+	},
+	{
+		question: "What is the favorite dog breed of the Queen of England?",
+		"A": "Corgi", "B": "Basenji", "C": "Pomeranian" , "D": "Poodle",
+		answer: "A"
+	},
+	{
+		question: "Which TV series had a dog named K9 who was also a robot?",
+		"A": "Full House", "B": "Star Trek", "C": "Doctor Who" , "D": "Law & Order",
+		answer: "C"
+	},
+	{
+		question: "Which dog breed is the smallest of them all?",
+		"A": "Dachshund", "B": "Shih Tzu", "C": "Pomeranian" , "D": "Chihuahua",
+		answer: "D"
+	},
+	{
+		question: "Which dog breed has a black tongue?",
+		"A": "Husky", "B": "Labrador", "C": "Weimarana" , "D": "Chow Chow",
+		answer: "D"
+	},	
+	{
+		question: "Which dog yodels instead of barks?",
+		"A": "Komondor", "B": "Otterhound", "C": "Basenji" , "D": "Bassett Hound",
+		answer: "C"
+	}	
 	];
 
 	var questionsSelected = [];
@@ -81,6 +121,7 @@ function displayQuestion()
 
 	$("#answerArea").css("display", "none");
 	$("#questionBlock").css("display", "block");
+	$("#questionNumber").html(++questionNumber);
 	currentQuestionNum = questionsSelected.shift();
 	//get question
 	var question = questions[currentQuestionNum];
@@ -240,6 +281,6 @@ reset();
 displaySlideImage();
 startSlideshow();
 setUpHandlers();
-
+$("#numQuestions").html(questions.length);
 
 }); //end ready
