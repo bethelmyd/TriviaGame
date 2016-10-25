@@ -66,3 +66,7 @@ img{
 #clock{
     display: none;
 }
+
+#answerArea{
+    height: 300px;
+}
