@@ -2,8 +2,11 @@
 
 $().ready(function(){
 
-	var images = ["cocker_spaniel.jpg", "doberman.jpg", "pug.jpg", "maltese.jpg", "schnauzer.jpg", 
+	var imagesForSlideShow = ["cocker_spaniel.jpg", "doberman.jpg", "pug.jpg", "maltese.jpg", "schnauzer.jpg", 
 	"pekingese.jpg", "pit_bull.jpg", "rottweiler.jpg"];
+
+	var imagesForCorrectAnswer = ["celebdog1.jpg", "celebdog2.jpg", "celebdog3.jpg", "celebdog4.jpg"];
+	var imagesForIncorrectAnswer = ["saddog1.jpg", "saddog2.jpg", "saddog3.jpg", "saddog4.jpg"];
 
 	var questions = [
 	{
@@ -31,19 +34,19 @@ $().ready(function(){
 	var $choice = null;
 	var currentQuestionNum = null;
 
-	function displayImage (){
-		$('#leftImage').html('<img src="assets/images/'+images[imageCount]+ '" width="132px" height="132px">');
-		$('#rightImage').html('<img src="assets/images/'+images[imageCount]+ '" width="132px" height="132px">');
+	function displaySlideImage (){
+		$('#leftImage').html('<img src="assets/images/'+imagesForSlideShow[imageCount]+ '" width="132px" height="132px">');
+		$('#rightImage').html('<img src="assets/images/'+imagesForSlideShow[imageCount]+ '" width="132px" height="132px">');
 	}
 
 	function nextImage (){
     //increment the count by 1
     imageCount++;
     //if the count is the same as the length of the image array, reset the count to 0
-    if(imageCount == images.length)
+    if(imageCount == imagesForSlideShow.length)
     	imageCount = 0;
 
-    displayImage();
+    displaySlideImage();
 
 }
 
@@ -51,7 +54,7 @@ function startSlideshow (){
     //use a setInterval to run nextImage
     slideShowTimer = setInterval(function(){
     	nextImage();
-    }, 4000);
+    }, 2000);
 }
 
 function prepareQuestions()  //sets up a random selection of question numbers
@@ -97,13 +100,12 @@ function displayQuestion()
 		{
 			clearInterval(questionTimer);
 			var correctAnswer = questions[currentQuestionNum].answer;
-			displayAnswer("The correct answer is: " + questions[currentQuestionNum][correctAnswer]);
+			displayAnswer("Times Up!<br>The correct answer is: " + questions[currentQuestionNum][correctAnswer], false);
 			var timer = setTimeout(function(){
 				$("#answerArea").css("display", "none");
 				$("#answerArea #answer").html("");					
 				if(questionsSelected.length != 0)
 				{
-
 					displayQuestion();
 				}
 				else
@@ -118,10 +120,21 @@ function displayQuestion()
 
 }
 
-function displayAnswer(msg){
+function displayAnswer(msg, isCorrect){
 	$("#questionBlock").css("display", "none");
 	$("#answerArea").css("display", "block");
-	$("#answerArea #answer").html(msg);
+	$("#answer").html(msg);
+	var random = Math.floor(Math.random() * imagesForCorrectAnswer.length);
+	var img;
+	if(isCorrect)
+	{
+		img = imagesForCorrectAnswer[random];
+	}
+	else
+	{
+		img = imagesForIncorrectAnswer[random];		
+	}
+	$("#answerImage").html("<img src = 'assets/images/" + img + "'>");
 }
 
 function gradeQuestion()
@@ -134,11 +147,11 @@ function gradeQuestion()
 	if(answer == correctAnswer)
 	{
 		correctCount++;
-		displayAnswer("Great Job!");
+		displayAnswer("Great Job!", true);
 	}
 	else 
 	{
-		displayAnswer("The correct answer is: " + questions[currentQuestionNum][correctAnswer]);
+		displayAnswer("Sorry!<br>The correct answer is: " + questions[currentQuestionNum][correctAnswer], false);
 	}
 	var timer = setTimeout(function(){
 		$("#answerArea").css("display", "none");
@@ -200,7 +213,7 @@ function reset(){
 
 /*Where everything starts*/
 reset();
-displayImage();
+displaySlideImage();
 startSlideshow();
 setUpHandlers();
 
