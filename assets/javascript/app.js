@@ -281,6 +281,6 @@ reset();
 displaySlideImage();
 startSlideshow();
 setUpHandlers();
-$("#numQuestions").html(questions.length);
+$("#numberOfQuestions").html(questions.length);
 
 }); //end ready
